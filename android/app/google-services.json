@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "637483749186",
+    "firebase_url": "https://dbsaveme.firebaseio.com",
+    "project_id": "dbsaveme",
+    "storage_bucket": "dbsaveme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637483749186:android:2f456ef79ac781f29b02db",
+        "android_client_info": {
+          "package_name": "com.reactchatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637483749186-p82n1v8g6e6vt5h7hdui4rfprorh57fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmAS1PP8P7FRL0Uk3al-2xJhBAjspByok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637483749186-p82n1v8g6e6vt5h7hdui4rfprorh57fs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
