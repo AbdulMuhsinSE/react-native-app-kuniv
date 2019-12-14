@@ -1,86 +1,71 @@
 import React, {Component} from 'react';
 import {
-  SafeAreaView,TouchableOpacity,View,Image,
-  ScrollView,Text,TouchableWithoutFeedback,FlatList, SnapshotViewIOS
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+  Image,
+  ScrollView,
+  Text,
+  TouchableWithoutFeedback,
+  FlatList,
+  SnapshotViewIOS,
 } from 'react-native';
-import { List, ListItem } from "react-native-elements"
+import {List, ListItem} from 'react-native-elements';
 // import * as firebase from 'firebase';
 import firebase from './firebaseConfig';
+import firebaseSDK from './FirebaseSDK';
 
-class ListUsers extends React.Component {
-    constructor() {
-        super();
-        items=[];
-        state = {
+class ListUsers extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      database: firebase.database(),
+      items: [],
+      subject: '',
+    };
+  }
 
-            email: '',
-        };
-
-        database = firebase.database();
-
-      }
-    // componentWillMount(){
-    //     var fire = firebase.database().ref('Users/');
-    //     fire.once('value').then(Snapshot => {
-    //         // this.setState({
-    //         //     email:Snapshot.val()
-    //         // })
-    //         const ghgh = Snapshot.val();
-    //         this.email=ghgh.email
-    //         console.log("hjh",this.email)
-    //     })
-    // }
-    // var playersRef = firebase.database.ref("Users/")
-    // console.log("details : " + playersRef);
-
-    componentWillMount() {
-
-        database.ref('UUIDS').on('value',(snap)=>{
-
-
-            snap.forEach((data)=>{
-                items.push({
-                    key:data.key,
-                    data:data.val(),
-                });
-            })
-
-            this.forceUpdate();
+  componentDidMount() {
+    this.state.subject = this.props.navigation.state.params.subject;
+    this.state.database.ref('Chats/' + this.state.subject).on('value', snap => {
+      this.state.items = [];
+      snap.forEach(data => {
+        this.state.items.push({
+          key: data.key,
+          data: data.val().toString(),
         });
-    }
+      });
 
-    actionOnRow(item) {
+      this.forceUpdate();
+    });
+  }
 
-        this.props.navigation.navigate('Chat', {
-            something: item.key,
-            subject: item.data.email,
-        });
+  actionOnRow(item) {
+    this.props.navigation.navigate('EmergencyServicesChat', {
+      something: firebaseSDK.uid,
+      subject: this.state.subject,
+      recipient: item.key,
+    });
 
-        console.log('Selected Item :',item);
-     }
+    console.log('Selected Item :', item);
+  }
 
-    render() {
+  render() {
     return (
-        <SafeAreaView>
-            <View >
-
-            <FlatList
-        data={items}
-        renderItem={({ item }) => (
-
-            <TouchableWithoutFeedback onPress={ () => this.actionOnRow(item)}>
-                <ListItem
-                    title={item.data.email}
-            subtitle={item.key}
+      <SafeAreaView>
+        <View>
+          <FlatList
+            data={this.state.items}
+            renderItem={({item}) => (
+              <TouchableWithoutFeedback onPress={() => this.actionOnRow(item)}>
+                <ListItem title={item.key} subtitle={item.data.createdAt} />
+              </TouchableWithoutFeedback>
+            )}
           />
-</TouchableWithoutFeedback>
-
-        )}
-      />
-
-            </View>
-        </SafeAreaView>
-        );
-      }
+        </View>
+      </SafeAreaView>
+    );
+  }
 }
-export default ListUsers
+export default ListUsers;

@@ -2,12 +2,8 @@ import React from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
   View,
-  Image,
   Text,
-  Button,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 
@@ -18,16 +14,6 @@ import firebaseSDK from './FirebaseSDK';
 let styles = {
   scroll: {
     backgroundColor: 'transparent',
-  },
-
-  instaButton: {
-    marginTop: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: '#1D7AE5',
-    borderRadius: 30,
-    borderColor: 'rgba(255,255,255,0.7)',
-    margin: 20,
   },
   createaccountButton: {
     flex: 1,
@@ -57,119 +43,65 @@ let styles = {
   },
 };
 
-class Police extends React.Component {
+class UserNavigationScreen extends React.Component {
   state = {
-    email: 'police@test.com',
-    password: '12345678',
-    avatar: '',
     showIndicator: false,
   };
 
-  handleCreateOperatorPress = () => {
-    this.props.navigation.navigate('OperatorLogin');
+  navigate = (userID, subject, recipient) => {
+    this.props.navigation.push('Chat', {
+      something: userID,
+      subject: subject,
+      recipient: recipient,
+    });
   };
-  handleCreateUserPress = () => {
-    this.props.navigation.navigate('UserLogin');
-  };
-  handleInstaPress = () => {};
 
   onPressLogin = async () => {
     this.setState({
       showIndicator: true,
     });
-    const user = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      avatar: this.state.avatar,
-    };
 
-
-    const response = firebaseSDK.login(
-      user,
-      this.loginSuccess,
-      this.loginFailed,
-    );
-  };
-
-  loginSuccess = () => {
-    console.log('login successful, navigate to chat.');
     let userInfo = {
       userID: uuid.v4(),
-      recipient: 'police',
+      recipient: '1gp3qmtNvTX2c1RfWbJ3abnZEzy1',
+      subject: 'police',
     };
 
-    firebaseSDK.createNewChat(userInfo);
-
-    this.props.navigation.navigate('Chat', {
-      something: userInfo.userID,
-      subject: userInfo.recipient,
-    });
-
-    // 1gp3qmtNvTX2c1RfWbJ3abnZEzy1
+    firebaseSDK.createNewChat(userInfo, () =>
+      this.navigate(userInfo.userID, userInfo.subject, userInfo.recipient),
+    );
   };
-
-  loginFailed = () => {
-    alert('Login failure. Please tried again.');
-  };
-
   onPressLoginHosptal = async () => {
     this.setState({
       showIndicator: true,
     });
-    const user = {
-      email: 'hospital@test.com',
-      password: '12345678',
+
+    let userInfo = {
+      userID: uuid.v4(),
+      recipient: 'BpHJeIdySBWqxQQWSKL7VZSKH9G2',
+      subject: 'hospital',
     };
 
-    const response = firebaseSDK.login(
-      user,
-      this.loginSuccessh,
-      this.loginFailed,
+    firebaseSDK.createNewChat(userInfo, () =>
+      this.navigate(userInfo.userID, userInfo.subject, userInfo.recipient),
     );
-  };
-
-  loginSuccessh = () => {
-    console.log('login successful, navigate to chat.');
-
-    this.props.navigation.navigate('Chat', {
-      something: uuid.v4(),
-      subject: 'hospital@test.com',
-    });
-    // BpHJeIdySBWqxQQWSKL7VZSKH9G2
   };
 
   onPressLoginFire = async () => {
     this.setState({
       showIndicator: true,
     });
-    const user = {
-      email: 'fire@test.com',
-      password: '12345678',
+
+    let userInfo = {
+      userID: uuid.v4(),
+      recipient: 'ajdJnt2pvHaevqigesjxf9BaDJa2',
+      subject: 'fire',
     };
 
-    const response = firebaseSDK.login(
-      user,
-      this.loginSuccessf,
-      this.loginFailed,
+    firebaseSDK.createNewChat(userInfo, () =>
+      this.navigate(userInfo.userID, userInfo.subject, userInfo.recipient),
     );
   };
-
-  loginSuccessf = () => {
-    console.log('login successful, navigate to chat.');
-
-    this.props.navigation.navigate('Chat', {
-      something: uuid.v4(),
-      subject: 'fire@test.com',
-    });
-
-    // ajdJnt2pvHaevqigesjxf9BaDJa2
-  };
-
-  loginFailed = () => {
-    alert('Login failure. Please tried again.');
-  };
-
   render() {
     if (this.state.showIndicator) {
       return (
@@ -262,4 +194,4 @@ class Police extends React.Component {
     }
   }
 }
-export default Police;
+export default UserNavigationScreen;

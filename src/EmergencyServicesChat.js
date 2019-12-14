@@ -1,32 +1,18 @@
 import React from 'react';
-import {TouchableWithoutFeedback, Image, Linking} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat'; // 0.3.0
 
 import firebaseSDK from './FirebaseSDK';
-import CustomActions from './CustomActions';
 
-export default class Chat extends React.Component {
+export default class EmergencyServicesChat extends React.Component {
   // const {params} = this.props.navigation.state;
 
   static navigationOptions = ({navigation}) => {
     const {params = {}} = navigation.state;
     return {
-      title: 'Chat',
+      title: 'Emergency Response',
       headerTitleStyle: {color: 'black', fontSize: 20},
       headerStyle: {backgroundColor: 'white'},
       headerLeft: null,
-      headerRight: (
-        <TouchableWithoutFeedback
-          style={{height: 45, alignItems: 'center', justifyContent: 'center'}}
-          onPress={() => {
-            Linking.openURL('tel:119');
-          }}>
-          <Image
-            style={{height: 36, width: 36, margin: 25}}
-            source={require('./assets/call_button.png')}
-          />
-        </TouchableWithoutFeedback>
-      ),
     };
   };
 
@@ -42,17 +28,12 @@ export default class Chat extends React.Component {
     };
   }
 
-  renderActions = props => {
-    return <CustomActions {...props} onSend={firebaseSDK.send} />;
-  };
-
   render() {
     return (
       <GiftedChat
         messages={this.state.messages}
-        onSend={firebaseSDK.send}
+        onSend={firebaseSDK.sendEmergency}
         user={this.user}
-        renderActions={this.renderActions}
       />
     );
   }
@@ -60,7 +41,7 @@ export default class Chat extends React.Component {
   componentDidMount() {
     firebaseSDK.refOn(
       this.props.navigation.state.params.subject,
-      this.props.navigation.state.params.something,
+      this.props.navigation.state.params.recipient,
       chat => {
         let newMessage = chat;
         this.setState(previousState => ({
@@ -81,7 +62,7 @@ export default class Chat extends React.Component {
     ) {
       firebaseSDK.refOn(
         this.props.navigation.state.params.subject,
-        this.props.navigation.state.params.something,
+        this.props.navigation.state.params.recipient,
         chat => {
           let newMessage = chat;
           this.setState(previousState => ({
