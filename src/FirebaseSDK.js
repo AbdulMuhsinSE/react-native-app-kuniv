@@ -137,7 +137,7 @@ class FirebaseSDK {
       _id,
       timestamp,
       text,
-      user
+      user,
     };
     return message;
   };
@@ -156,13 +156,28 @@ class FirebaseSDK {
   send = messages => {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
+      alert(user.id);
+
       const message = {
         text,
         user,
         createdAt: this.timestamp,
       };
-      this.ref.push(message);
+      firebase.database().ref(`Chats/${user.subject}/${user.id}/messages/`).push(message);
     }
+  };
+
+  createNewChat = userInfo => {
+    let newChat = {
+      user: userInfo.userID,
+      recipient: userInfo.recipient,
+      messages: [],
+    };
+
+    firebase.database().ref('Chats/'+ userInfo.recipient + "/" + userInfo.userID).set({
+        createdAt: firebase.database.ServerValue.TIMESTAMP,
+        messages: [],
+      });
   };
 
   refOff() {

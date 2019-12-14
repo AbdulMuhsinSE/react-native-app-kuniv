@@ -1,19 +1,17 @@
 import React from 'react';
-import {TouchableWithoutFeedback, Image, Linking, View, Platform} from 'react-native';
-import {GiftedChat, Composer} from 'react-native-gifted-chat'; // 0.3.0
+import {TouchableWithoutFeedback, Image, Linking} from 'react-native';
+import {GiftedChat} from 'react-native-gifted-chat'; // 0.3.0
 
-import firebase from 'react-native-firebase';
 import firebaseSDK from './FirebaseSDK';
 import CustomActions from './CustomActions';
-import CustomView from './CustomView';
 
 let uuuId = '';
+let subject = '';
 
 export default class Chat extends React.Component {
   // const {params} = this.props.navigation.state;
 
-
-	static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({navigation}) => {
     const {params = {}} = navigation.state;
     return {
       title: 'Chat',
@@ -31,7 +29,7 @@ export default class Chat extends React.Component {
             source={require('./assets/call_button.png')}
           />
         </TouchableWithoutFeedback>
-      )
+      ),
     };
   };
 
@@ -43,16 +41,13 @@ export default class Chat extends React.Component {
     return {
       id: uuuId,
       _id: firebaseSDK.uid,
+      subject: subject,
     };
-
-    // id: firebaseSDK.uid,
-    // _id: 'GfeO1jssH1hF8ANRF9Le4c6SNUy2'
   }
 
   renderActions = props => {
-      return <CustomActions {...props} onSend={firebaseSDK.send} />
+    return <CustomActions {...props} onSend={firebaseSDK.send} />;
   };
-
 
   render() {
     return (
@@ -67,15 +62,21 @@ export default class Chat extends React.Component {
 
   componentDidMount() {
     uuuId = this.props.navigation.state.params.something; // outputs "Some Value"
+    subject = this.props.navigation.state.params.subject;
 
-    console.log('SAGSDSFADS :: ', uuuId);
 
     firebaseSDK.refOn(message => {
-            this.setState(previousState => ({
-                messages: GiftedChat.append(previousState.messages, message),
-            }));
-        }
-    );
+      let newMessage = message;
+      if (
+        (newMessage.user.id === uuuId ||
+          newMessage.user._id === firebaseSDK.uid || newMessage.user._id === uuuId) &&
+        newMessage.user.subject === subject
+      ) {
+        this.setState(previousState => ({
+          messages: GiftedChat.append(previousState.messages, newMessage),
+        }));
+      }
+    });
   }
 
   componentWillUnmount() {

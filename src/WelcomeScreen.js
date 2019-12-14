@@ -1,15 +1,17 @@
 import React from 'react';
 import {
-  SafeAreaView,TouchableOpacity,
-  ScrollView,
-  View,Image,Text,Button,Alert
+  SafeAreaView,
+    TouchableOpacity,
+  View,
+    Text,
 } from 'react-native';
+
 let styles = {
     scroll: {
       backgroundColor: 'transparent',
     },
-  
-  
+
+
       instaButton: {
         marginTop: 50,
         alignItems: 'center',
@@ -17,7 +19,7 @@ let styles = {
        // backgroundColor: '#1D7AE5',
         borderRadius: 30,
         borderColor: "rgba(255,255,255,0.7)",
-        margin: 20, 
+        margin: 20,
       },
   createaccountButton: {
       flex:1,
@@ -33,33 +35,32 @@ let styles = {
 },
   textaccountButton: {
     marginTop: 20,
-   
-    margin:4, 
+
+    margin:4,
   },
     safeContainer: {
       flex: 1,
       backgroundColor: 'white',
     },
   };
+
 class WelcomeScreen extends React.Component {
-   
+
   handleCreateOperatorPress = () => {
         this.props.navigation.navigate('UserLogin')
     };
+
     handleCreateUserPress = () => {
       this.props.navigation.navigate('Police')
   };
-  handleInstaPress= () => {
-  
-};
 
     render() {
         return (
           <SafeAreaView style={styles.safeContainer}>
-           
-               
-            
-       
+
+
+
+
           <View style={styles.createaccountButton}>
             <TouchableOpacity onPress={this.handleCreateUserPress}style={{ height: 50 ,alignItems: 'center', justifyContent: 'center',}}>
               <View style={{borderRadius: 10,backgroundColor:'white'}}>
@@ -77,11 +78,11 @@ class WelcomeScreen extends React.Component {
                }} > OPERATOR</Text>
                </View>
 
-             
+
             </TouchableOpacity>
           </View>
-        
-           
+
+
           </SafeAreaView>
         );
       }

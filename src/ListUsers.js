@@ -35,7 +35,7 @@ class ListUsers extends React.Component {
 
     componentWillMount() {
 
-        database.ref('Users').on('value',(snap)=>{
+        database.ref('UUIDS').on('value',(snap)=>{
 
 
             snap.forEach((data)=>{
@@ -53,6 +53,7 @@ class ListUsers extends React.Component {
 
         this.props.navigation.navigate('Chat', {
             something: item.key,
+            subject: item.data.email,
         });
 
         console.log('Selected Item :',item);

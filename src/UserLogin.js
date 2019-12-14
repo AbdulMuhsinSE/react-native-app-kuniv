@@ -32,24 +32,13 @@ export default class UserLogin extends React.Component {
 	loginSuccess = () => {
 		console.log('login successful, navigate to chat.');
 		this.props.navigation.navigate('ListUsers', {
-			
+
 		});
 	};
 
 	loginFailed = () => {
 		alert('Login failure. Please tried again.');
 	};
-
-	componentDidMount() {
-		// const ref = firebase.database().ref('Users')
-		// ref.orderByChild('hours').on('child_added', snapshot => {
-		//   this.state.highScoreList.push({
-		// 	id: snapshot.key,
-		// 	hours: snapshot.val().hours,
-		// 	name: snapshot.val().name
-		//   });
-		// });
-	  }
 
 	onChangeTextEmail = email => this.setState({ email });
 	onChangeTextPassword = password => this.setState({ password });

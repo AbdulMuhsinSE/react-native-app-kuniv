@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  SafeAreaView,TouchableOpacity,
+  SafeAreaView,
+  TouchableOpacity,
   ScrollView,
   View,Image,Text,Button,Alert
 } from 'react-native';
-import { TextField } from 'react-native-material-textfield';
+import {TextField} from 'react-native-material-textfield';
 
 let styles = {
     scroll: {
@@ -75,7 +76,7 @@ margin:30,
     justifyContent: 'center',
     margin: 20,
     borderRadius: 30,
-    borderColor: "grey",
+    borderColor: 'grey',
     //borderTopColor: '#1D7AE5',
      borderWidth: 1,
   },
