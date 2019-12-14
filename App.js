@@ -4,10 +4,11 @@ import {createAppContainer} from 'react-navigation';
 import WelcomeScreen from './src/WelcomeScreen';
 import UserLogin from './src/UserLogin';
 import OperatorLogin from './src/OperatorLogin';
-import Police from './src/Police';
+import UserNavigationScreen from './src/UserNavigationScreen';
 import OperatorUserList from './src/OperatorUserList';
 import Chat from './src/Chat';
 import ListUsers from './src/ListUsers';
+import EmergencyServicesChat from './src/EmergencyServicesChat';
 
 export default class App extends React.Component {
   render() {
@@ -35,8 +36,8 @@ const AppNavigator = createStackNavigator({
       // title:'Operator Login'
     },
   },
-  Police: {
-    screen: Police,
+  UserNavigationScreen: {
+    screen: UserNavigationScreen,
     navigationOptions: {
       // header: null,
     },
@@ -53,7 +54,12 @@ const AppNavigator = createStackNavigator({
       // header: null,
     },
   },
-
+  EmergencyServicesChat: {
+    screen: EmergencyServicesChat,
+    navigationOptions: {
+      //header: null,
+    },
+  },
   ListUsers: {
     screen: ListUsers,
     navigationOptions: {
